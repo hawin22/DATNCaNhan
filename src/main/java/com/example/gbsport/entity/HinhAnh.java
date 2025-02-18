@@ -1,4 +1,4 @@
-package com.example.gbsports.entity;
+package com.example.gbsport.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -12,7 +12,7 @@ public class HinhAnh {
     private Integer id_hinh_anh;
     @ManyToOne
     @JoinColumn(name = "id_chi_tiet_san_pham")
-    ChiTietSanPham chiTietSanPham;
+    com.example.gbsports.entity.ChiTietSanPham chiTietSanPham;
     private Boolean anh_chinh;
     private String hinh_anh;
 }

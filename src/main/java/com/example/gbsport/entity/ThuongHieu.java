@@ -1,4 +1,4 @@
-package com.example.gbsports.entity;
+package com.example.gbsport.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

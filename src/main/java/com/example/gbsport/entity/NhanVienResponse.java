@@ -16,4 +16,5 @@ public interface NhanVienResponse {
      boolean getGioi_tinh();
      String getSo_dien_thoai();
      String getTrang_thai();
+     String getTen_roles();
 }

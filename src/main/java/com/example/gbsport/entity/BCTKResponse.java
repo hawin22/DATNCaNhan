@@ -1,2 +1,5 @@
-package com.example.gbsport.entity;public interface BCTKResponse {
+package com.example.gbsport.entity;
+
+public interface BCTKResponse {
+    
 }

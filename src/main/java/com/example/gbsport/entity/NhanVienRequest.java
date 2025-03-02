@@ -14,29 +14,36 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 @Data
 public class NhanVienRequest {
-    private Integer id_nhan_vien;
-    @NotBlank(message = "Không được để trống mã")
-    private String ma_nhan_vien;
-    @NotBlank(message = "Không được để trống tên")
-    private String ten_nhan_vien;
+    private Integer idNhanVien;
+
+//    @NotBlank(message = "Không được để trống mã")
+    private String maNhanVien;
+
+//    @NotBlank(message = "Không được để trống tên")
+    private String tenNhanVien;
+
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "Không được để trống ngày sinh")
-    private Date ngay_sinh;
-    @NotBlank(message = "Không được để trống email")
-    @Email(message = "Email không hợp lệ")
+//    @NotNull(message = "Không được để trống ngày sinh")
+    private Date ngaySinh;
+
+//    @NotBlank(message = "Không được để trống email")
+//    @Email(message = "Email không hợp lệ")
     private String email;
-    @NotBlank(message = "Không được để trống địa chỉ liên hệ")
-    private String dia_chi_lien_he;
-    @NotNull(message = "Chưa chọn giới tính")
-    private Boolean gioi_tinh;
-    @NotBlank(message = "Không được để trống số điện thoại")
-    private String so_dien_thoai;
-    @NotBlank(message = "Không được để trống trạng thái")
-    private String trang_thai;
+
+//    @NotBlank(message = "Không được để trống địa chỉ liên hệ")
+    private String diaChiLienHe;
+
+//    @NotNull(message = "Chưa chọn giới tính")
+    private Boolean gioiTinh;
+
+//    @NotBlank(message = "Không được để trống số điện thoại")
+    private String soDienThoai;
+
+//    @NotBlank(message = "Không được để trống trạng thái")
+    private String trangThai;
 
     private Roles roles;
-
     private TaiKhoan taiKhoan;
 
 }

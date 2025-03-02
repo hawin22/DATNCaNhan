@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @RestController
@@ -45,19 +46,19 @@ public class NhanVienController {
     }
     ArrayList<String> mangLoi = new ArrayList<>();
     private ArrayList<String> validateNhanVien(NhanVienRequest nhanVienRequest) {
-
+        mangLoi.clear();
         // Kiểm tra trống
         if (nhanVienRequest.getMaNhanVien() == null || nhanVienRequest.getMaNhanVien().trim().isEmpty()) {
-            mangLoi.add("Mã nhân viên không được để trống") ;
+            mangLoi.add("Mã nhân viên không được để trống \n") ;
         }
         if (nhanVienRequest.getTenNhanVien() == null || nhanVienRequest.getTenNhanVien().trim().isEmpty()) {
-            mangLoi.add("Tên nhân viên không được để trống") ;
+            mangLoi.add("Tên nhân viên không được để trống \n") ;
         }
         if (nhanVienRequest.getEmail() == null || nhanVienRequest.getEmail().trim().isEmpty()) {
-            mangLoi.add("Email không được để trống") ;
+            mangLoi.add("Email không được để trống \n") ;
         }
         if (nhanVienRequest.getSoDienThoai() == null || nhanVienRequest.getSoDienThoai().trim().isEmpty()) {
-            mangLoi.add("Số điện thoại không được để trống") ;
+            mangLoi.add("Số điện thoại không được để trống \n") ;
         }
 
 //        // Kiểm tra trùng mã, email, số điện thoại
@@ -72,6 +73,22 @@ public class NhanVienController {
 //        }
 
         return mangLoi; // Không có lỗi
+    }
+    ArrayList<String> mangTrung = new ArrayList<>();
+    private ArrayList<String> checkTrung(NhanVienRequest nhanVienRequest){
+        mangTrung.clear();
+        for (NhanVienResponse nv: nhanVienRepo.getAll()) {
+            if (nv.getMaNhanVien().trim().equalsIgnoreCase(nhanVienRequest.getMaNhanVien().trim())){
+                mangTrung.add("Trùng mã nhân viên");
+            }
+            if (nv.getEmail().trim().equalsIgnoreCase(nhanVienRequest.getEmail().trim())){
+                mangTrung.add("Trùng Email");
+            }
+            if (nv.getSoDienThoai().trim().equalsIgnoreCase(nhanVienRequest.getSoDienThoai().trim())){
+                mangTrung.add("Trùng số điện thoại");
+            }
+        }
+        return mangTrung;
     }
 //    private void validateNhanVien(NhanVienRequest nhanVienRequest) {
 //        if (nhanVienRequest.getMaNhanVien() == null || nhanVienRequest.getMaNhanVien().trim().isEmpty()) {
@@ -110,13 +127,13 @@ public class NhanVienController {
 
     @PostMapping("/quan-ly-nhan-vien/add")
     public String add(@RequestBody NhanVienRequest nhanVienRequest) {
-        if (validateNhanVien(nhanVienRequest).isEmpty()){
+        if (validateNhanVien(nhanVienRequest).isEmpty() && checkTrung(nhanVienRequest).isEmpty()){
             NhanVien nhanVien = new NhanVien();
             BeanUtils.copyProperties(nhanVienRequest, nhanVien);
             nhanVienRepo.save(nhanVien);
             return "Thêm thành công";
         }else {
-            return mangLoi.toString()+"\n"+"Thêm tặc bại";
+            return mangLoi.toString()+"\n"+mangTrung.toString()+"Thêm tặc bại \n";
         }
 
     }

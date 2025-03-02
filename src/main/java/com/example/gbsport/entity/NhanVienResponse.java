@@ -4,17 +4,17 @@ import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+
 public interface NhanVienResponse {
-     Integer getId_nhan_vien();
-     String getMa_nhan_vien();
-     String getTen_nhan_vien();
+    Integer getIdNhanVien();
+    String getMaNhanVien();
+    String getTenNhanVien();
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-     Date getNgay_sinh();
-     String getEmail();
-     String getDia_chi_lien_he();
-     boolean getGioi_tinh();
-     String getSo_dien_thoai();
-     String getTrang_thai();
-     String getTen_roles();
+    Date getNgaySinh();
+    String getEmail();
+    String getDiaChiLienHe();
+    boolean getGioiTinh();
+    String getSoDienThoai();
+    String getTrangThai();
 }

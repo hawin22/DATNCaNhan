@@ -34,11 +34,11 @@
         <div class="mb-3">
             <label class="form-label">Mã Nhân Viên</label>
             <input type="text" class="form-control" name="ma_nhan_vien" >
-           <span> <form:errors path="ma_nhan_vien" cssClass="text-danger"></form:errors></span>
+            <form:errors path="ma_nhan_vien" cssClass="text-danger"></form:errors>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Họ và Tên</label>
+            <label class="form-label">Tên nhân viên</label>
             <input type="text" class="form-control" name="ten_nhan_vien" required>
 <%--            <form:errors path="ten_nhan_vien" cssClass="text-danger"></form:errors>--%>
         </div>
@@ -46,13 +46,13 @@
         <div class="mb-3">
             <label class="form-label">Giới tính</label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="gioi_tinh">
+                <input class="form-check-input" type="radio" value="true" name="gioi_tinh">
                 <label class="form-check-label">
                     Nam
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="gioi_tinh">
+                <input class="form-check-input" type="radio" value="false" name="gioi_tinh">
                 <label class="form-check-label">
                     Nữ
                 </label>
@@ -102,8 +102,17 @@
             </select>
 <%--            <form:errors path="roles" cssClass="text-danger"></form:errors>--%>
         </div>
+        <div class="mb-3">
+            <label class="form-label">Tên tài khoản</label>
+            <select class="form-control" name="taiKhoan">
+                <c:forEach items="${listTK}" var="listTK">
+                    <option value="${listTK.id_tai_khoan}">${listTK.ten_dang_nhap}</option>
+                </c:forEach>
+            </select>
+                <%--            <form:errors path="roles" cssClass="text-danger"></form:errors>--%>
+        </div>
 
-        <button type="submit" formaction="/quan-ly-nhan-viens/addNV" class="btn btn-primary">Thêm Nhân Viên</button>
+        <button type="submit" formaction="/quan-ly-nhan-viens/addNV" class="btn btn-primary" onclick="return confirm('Bạn có muốn thêm không')">Thêm Nhân Viên</button>
         <a href="/quan-ly-nhan-viens" class="btn btn-secondary">Quay Lại</a>
     </form:form>
 </div>

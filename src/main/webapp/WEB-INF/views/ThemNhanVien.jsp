@@ -34,7 +34,11 @@
         <div class="mb-3">
             <label class="form-label">Mã Nhân Viên</label>
             <input type="text" class="form-control" name="ma_nhan_vien" >
+<<<<<<< HEAD
+           <form:errors path="ma_nhan_vien" cssClass="text-danger"></form:errors>
+=======
             <form:errors path="ma_nhan_vien" cssClass="text-danger"></form:errors>
+>>>>>>> 613ae0e0b053357e571a5242af648bb7010cf9a5
         </div>
 
         <div class="mb-3">

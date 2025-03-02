@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @RestController
@@ -43,23 +44,23 @@ public class NhanVienController {
         Page<NhanVienResponse> list = nhanVienRepo.listPT(pageable);
         return list.getContent();
     }
-//    ArrayList<String> mangLoi = new ArrayList<>();
-//    private String validateNhanVien(NhanVienRequest nhanVienRequest) {
-//
-//        // Kiểm tra trống
-//        if (nhanVienRequest.getMaNhanVien() == null || nhanVienRequest.getMaNhanVien().trim().isEmpty()) {
-//            return "Mã nhân viên không được để trống";
-//        }
-//        if (nhanVienRequest.getTenNhanVien() == null || nhanVienRequest.getTenNhanVien().trim().isEmpty()) {
-//            return "Tên nhân viên không được để trống";
-//        }
-//        if (nhanVienRequest.getEmail() == null || nhanVienRequest.getEmail().trim().isEmpty()) {
-//            return "Email không được để trống";
-//        }
-//        if (nhanVienRequest.getSoDienThoai() == null || nhanVienRequest.getSoDienThoai().trim().isEmpty()) {
-//            return "Số điện thoại không được để trống";
-//        }
-//
+    ArrayList<String> mangLoi = new ArrayList<>();
+    private ArrayList<String> validateNhanVien(NhanVienRequest nhanVienRequest) {
+        mangLoi.clear();
+        // Kiểm tra trống
+        if (nhanVienRequest.getMaNhanVien() == null || nhanVienRequest.getMaNhanVien().trim().isEmpty()) {
+            mangLoi.add("Mã nhân viên không được để trống \n") ;
+        }
+        if (nhanVienRequest.getTenNhanVien() == null || nhanVienRequest.getTenNhanVien().trim().isEmpty()) {
+            mangLoi.add("Tên nhân viên không được để trống \n") ;
+        }
+        if (nhanVienRequest.getEmail() == null || nhanVienRequest.getEmail().trim().isEmpty()) {
+            mangLoi.add("Email không được để trống \n") ;
+        }
+        if (nhanVienRequest.getSoDienThoai() == null || nhanVienRequest.getSoDienThoai().trim().isEmpty()) {
+            mangLoi.add("Số điện thoại không được để trống \n") ;
+        }
+
 //        // Kiểm tra trùng mã, email, số điện thoại
 //        if (nhanVienRepo.existsByMaNhanVien(nhanVienRequest.getMaNhanVien())) {
 //            return "Mã nhân viên đã tồn tại";
@@ -70,9 +71,25 @@ public class NhanVienController {
 //        if (nhanVienRepo.existsBySoDienThoai(nhanVienRequest.getSoDienThoai())) {
 //            return "Số điện thoại đã tồn tại";
 //        }
-//
-//        return null; // Không có lỗi
-//    }
+
+        return mangLoi; // Không có lỗi
+    }
+    ArrayList<String> mangTrung = new ArrayList<>();
+    private ArrayList<String> checkTrung(NhanVienRequest nhanVienRequest){
+        mangTrung.clear();
+        for (NhanVienResponse nv: nhanVienRepo.getAll()) {
+            if (nv.getMaNhanVien().trim().equalsIgnoreCase(nhanVienRequest.getMaNhanVien().trim())){
+                mangTrung.add("Trùng mã nhân viên");
+            }
+            if (nv.getEmail().trim().equalsIgnoreCase(nhanVienRequest.getEmail().trim())){
+                mangTrung.add("Trùng Email");
+            }
+            if (nv.getSoDienThoai().trim().equalsIgnoreCase(nhanVienRequest.getSoDienThoai().trim())){
+                mangTrung.add("Trùng số điện thoại");
+            }
+        }
+        return mangTrung;
+    }
 //    private void validateNhanVien(NhanVienRequest nhanVienRequest) {
 //        if (nhanVienRequest.getMaNhanVien() == null || nhanVienRequest.getMaNhanVien().trim().isEmpty()) {
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Mã nhân viên không được để trống.");
@@ -110,11 +127,15 @@ public class NhanVienController {
 
     @PostMapping("/quan-ly-nhan-vien/add")
     public String add(@RequestBody NhanVienRequest nhanVienRequest) {
-        validateNhanVien(nhanVienRequest);
-        NhanVien nhanVien = new NhanVien();
-        BeanUtils.copyProperties(nhanVienRequest, nhanVien);
-        nhanVienRepo.save(nhanVien);
-        return "Thêm thành công";
+        if (validateNhanVien(nhanVienRequest).isEmpty() && checkTrung(nhanVienRequest).isEmpty()){
+            NhanVien nhanVien = new NhanVien();
+            BeanUtils.copyProperties(nhanVienRequest, nhanVien);
+            nhanVienRepo.save(nhanVien);
+            return "Thêm thành công";
+        }else {
+            return mangLoi.toString()+"\n"+mangTrung.toString()+"Thêm tặc bại \n";
+        }
+
     }
 
     @PostMapping("/quan-ly-nhan-vien/update")
@@ -152,19 +173,19 @@ public class NhanVienController {
         return nhanVienRepo.locNhanVienTheoTrangThai(trangThai);
     }
 
-    @PostMapping("addNhanVien")
-    public ResponseEntity<?> saveNhanVien(@Valid @RequestBody NhanVienRequest nhanVienRequest, BindingResult result) {
-        if (result.hasErrors()) {
-            List<String> errors = result.getAllErrors().stream().map(error -> error.getDefaultMessage())
-                    .collect(Collectors.toList());
-            return ResponseEntity.badRequest().body(errors);
-        } else {
-            NhanVien nv = new NhanVien();
-            BeanUtils.copyProperties(nhanVienRequest, nv);
-            nhanVienRepo.save(nv);
-            return ResponseEntity.ok("Lưu thành công");
-
-        }
-    }
+//    @PostMapping("addNhanVien")
+//    public ResponseEntity<?> saveNhanVien(@Valid @RequestBody NhanVienRequest nhanVienRequest, BindingResult result) {
+//        if (result.hasErrors()) {
+//            List<String> errors = result.getAllErrors().stream().map(error -> error.getDefaultMessage())
+//                    .collect(Collectors.toList());
+//            return ResponseEntity.badRequest().body(errors);
+//        } else {
+//            NhanVien nv = new NhanVien();
+//            BeanUtils.copyProperties(nhanVienRequest, nv);
+//            nhanVienRepo.save(nv);
+//            return ResponseEntity.ok("Lưu thành công");
+//
+//        }
+//    }
 
 }

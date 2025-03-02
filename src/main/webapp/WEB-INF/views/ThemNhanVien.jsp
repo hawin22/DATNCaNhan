@@ -34,7 +34,7 @@
         <div class="mb-3">
             <label class="form-label">Mã Nhân Viên</label>
             <input type="text" class="form-control" name="ma_nhan_vien" >
-           <span> <form:errors path="ma_nhan_vien" cssClass="text-danger"></form:errors></span>
+           <form:errors path="ma_nhan_vien" cssClass="text-danger"></form:errors>
         </div>
 
         <div class="mb-3">

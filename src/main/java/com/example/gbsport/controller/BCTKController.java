@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-@Validated
 @Controller
 public class BCTKController {
     @Autowired
@@ -49,9 +48,6 @@ public class BCTKController {
     @GetMapping("/quan-ly-nhan-viens/addNV")
     public String showAddForm(Model model) {
         model.addAttribute("listRoles",rolesRepo.findAll());
-//        for (Roles role: rolesRepo.findAll()) {
-//            role.toString();
-//        }
         return "ThemNhanVien"; // Trả về trang JSP
     }
     @PostMapping("/quan-ly-nhan-viens/addNV")

@@ -178,6 +178,8 @@ public class NhanVienController {
 
         if (nhanVienRequest.getEmail() == null || nhanVienRequest.getEmail().trim().isEmpty()) {
             errors.append("Email không được để trống.\n");
+        } else if (!nhanVienRequest.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
+                errors.append("Email không đúng định dạng.\n");
         } else if (nhanVienRepo.existsByEmail(nhanVienRequest.getEmail())) {
             errors.append("Email đã tồn tại.\n");
         }
@@ -192,6 +194,8 @@ public class NhanVienController {
 
         if (nhanVienRequest.getSoDienThoai() == null || nhanVienRequest.getSoDienThoai().trim().isEmpty()) {
             errors.append("Số điện thoại không được để trống.\n");
+        } else if (!nhanVienRequest.getSoDienThoai().matches("^(0[3|5|7|8|9])[0-9]{8,9}$")) {
+            errors.append("Số điện thoại không đúng định dạng Việt Nam.\n");
         } else if (nhanVienRepo.existsBySoDienThoai(nhanVienRequest.getSoDienThoai())) {
             errors.append("Số điện thoại đã tồn tại.\n");
         }

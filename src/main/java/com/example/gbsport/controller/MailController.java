@@ -1,7 +1,6 @@
 package com.example.gbsport.controller;
 
-import com.example.gbsport.service.MailService;
-import jakarta.mail.MessagingException;
+import com.example.gbsport.repository.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,10 +13,10 @@ public class MailController {
 
     @PostMapping("/send")
     public String sendEmail(@RequestParam(name = "to") String to,
-                            @RequestParam(name = "subject") String subject,
-                            @RequestParam(name = "body") String body) {
+            @RequestParam(name = "subject") String subject,
+            @RequestParam(name = "body") String body) {
         mailService.sendEmail(to, subject, body);
-        System.out.println("đến:"+to +"\n"+"Tiêu đề:"+subject+"\n"+"Nội dung:"+body);
+        System.out.println("đến:" + to + "\n" + "Tiêu đề:" + subject + "\n" + "Nội dung:" + body);
         return "Email đã gửi thành công!";
     }
 }

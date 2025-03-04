@@ -72,7 +72,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 36590a61bcb83c94c22a8cc637d16cbd2f2e6521
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
